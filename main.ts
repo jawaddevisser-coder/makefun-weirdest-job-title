@@ -1,13 +1,18 @@
 import { mkdirSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
 
-// Judge brief: a real-sounding job with one hilariously specific twist.
-const LINE = "Official Taste Tester for Airline Peanuts, First Class Only";
+// Weirdest Job Title — Blind Judge Showdown
+// One job title, 60 characters at most. A real-sounding corporate title
+// with one hilariously specific twist beats a generic oddity.
+const TITLE = "Senior Vice President of Lost Remote Controls";
 
-const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
-// Self-check: the gate needs 1-60 chars of real text.
-if (LINE.length < 1 || LINE.length > 60 || !LINE.trim()) {
-  throw new Error(`job title must be 1-60 chars, got ${LINE.length}`);
+// The gate rejects anything over 60 characters or blank, so enforce it
+// here instead of trusting the string by eye.
+const title = TITLE.trim();
+if (title.length === 0 || title.length > 60) {
+  throw new Error(`Title must be 1-60 characters, got ${title.length}`);
 }
-mkdirSync(outDir, { recursive: true });
-writeFileSync(join(outDir, "entry.txt"), LINE, "utf8");
+
+mkdirSync("/output", { recursive: true });
+writeFileSync("/output/entry.txt", title + "\n", "utf8");
+console.log(`Wrote ${title.length} characters to /output/entry.txt`);
+console.log(title);
